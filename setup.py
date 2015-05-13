@@ -437,6 +437,15 @@ if not exists(join(ROOT, 'MANIFEST.in')):
 else:
     jsbuild = parse_jsargs()
 
+
+# Skip building BokehJS if develop uninstall is issued.
+if ("develop" in sys.argv):
+    dev_pos = sys.argv.index("develop")
+
+    if len(sys.argv) > (dev_pos + 1):
+        if sys.argv[dev_pos + 1] in ["-u", "--uninstall"]:
+            jsbuild = False
+
 if jsbuild:
     build_js()
 
